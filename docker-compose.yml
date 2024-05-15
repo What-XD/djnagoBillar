@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  postgres-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: 'billar_bd'
+      POSTGRES_USER: 'billar_bd'
+      POSTGRES_PASSWORD: '2bD9ir3'
+    networks:
+      - app-network
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+    networks:
+      - app-network
+    volumes:
+      - static_volume:/app/static
+    depends_on:
+      - postgres-db
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./conf/nginx.conf:/etc/nginx/nginx.conf
+      - static_volume:/static
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+    depends_on:
+      - app
+
+volumes:
+  pg_data:
+  static_volume:
+
+networks:
+  app-network:
+    driver: bridge

@@ -7074,7 +7074,7 @@ span.info__list--item-content {
    23. Footer Page Css
 */
 .footer__bg {
-  background: url(../img/other/footer-bg.webp);
+  background-color: black;
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: center center;
